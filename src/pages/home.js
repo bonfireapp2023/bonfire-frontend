@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Images from "../components/images";
-import HealthRecord from '../components/health';
+import HealthRecord from '../components/healthrecord';
 
 
 const Header = ({user_address}) =>  {
