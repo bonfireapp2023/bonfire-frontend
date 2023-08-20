@@ -1,16 +1,20 @@
 import React from 'react';
 import '../styles/fonts.css';
 import metamask_fox from '../images/MetaMask_Fox.png';
+import background_picture from '../images/sky.jpg';
 import { MetaMaskSDK } from '@metamask/sdk';
+import { Link } from 'react-router-dom';
+import "../styles/header.css"
 
 
 const ConnectWalletButton = ({ connect_wallet }) => {
     const buttonStyle = {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         borderRadius: 10,
-        color: 'white', // force color here since background changes
+        color: 'black', // force color here since background changes
+        marginTop: 15,
     };
 
     const imageStyle = {
@@ -40,11 +44,27 @@ const connect_wallet = async () => {
         .catch((err) => console.log(err));
   };
 
+  
+const Header = () =>  {
+    return (
+        <div className="header space">
+            <Link
+                key='home'
+                className="header textStyle"
+                to='/home'
+            >
+                <h2 className="header textStyle">bonfire 🔥🪵</h2>
+            </Link>
+        </div >
+    );
+
+}
+
 const Landing = () => {
     const space_horizontal = {
         display: 'flex',
         width: '100vw', /* 100% of the viewport width */
-        height: '90vh', /* 100% of the viewport height */
+        height: '80vh', /* 100% of the viewport height */
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -55,14 +75,29 @@ const Landing = () => {
         justifyContent: 'center',
         alignItems: 'center',
     };
+    const backgroundStyle = {
+        backgroundImage: `url(${background_picture})`,
+        backgroundSize: 'cover', /* Cover the entire container */
+        backgroundPosition: "center center", /* Center the image */
+        width: "100vw", /* 100% of the viewport width */
+        height: "100vh", /* 100% of the viewport height */
+        overflow: "hidden" /* Prevent scrollbars */
+    }
+    const titleStyle = {
+        margin: '30px',
+        fontSize: '60px',
+        color: 'white',
+        textAlign: 'center',
+    }
 
     return (
-        <div>
-           
+           <div style={backgroundStyle}>
+            <Header />
             <div style={space_horizontal}>
                 <div style={space_vertical}>
-                    <h1 style={{ margin: '30px' }}>
-                        Welcome to Bonfire 🔥🪵
+                    <h1 style={titleStyle}>
+                        welcome to bonfire, <br />
+                        your cloud that belongs to you
                     </h1>
                     <ConnectWalletButton connect_wallet={connect_wallet} />
                 </div>
