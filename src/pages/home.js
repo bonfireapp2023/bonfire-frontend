@@ -38,20 +38,6 @@ const Home = () => {
             )
     }
 
-    const space_horizontal = {
-        display: 'flex',
-        width: '100vw', /* 100% of the viewport width */
-        height: '90vh', /* 100% of the viewport height */
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    };
-    const space_vertical = {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    };
     const leftBar = {
         float: 'left',
         width: '15%',
