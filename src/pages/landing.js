@@ -13,6 +13,7 @@ const ConnectWalletButton = ({ connect_wallet }) => {
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
+        border: "2px solid white",
         color: 'black', // force color here since background changes
         marginTop: 15,
     };
