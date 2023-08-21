@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Images from "../components/images";
 import HealthRecord from '../components/healthrecord';
+import All from "../components/all";
 
 
 const Header = ({user_address}) =>  {
@@ -49,7 +50,7 @@ const Home = () => {
         float: 'right',
         width: '80%',
         padding: '10px',
-        textAlign: 'center',
+        //textAlign: 'center',
     }
 
     const tabsStyle = {
@@ -57,6 +58,7 @@ const Home = () => {
     }
 
     const side_items = [
+        { content: 'All', subpage: <All /> },
         { content: 'Images', subpage: <Images /> },
         { content: 'Health Records', subpage: <HealthRecord /> },
     ]
