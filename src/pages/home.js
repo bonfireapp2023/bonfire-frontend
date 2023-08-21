@@ -5,7 +5,6 @@ import HealthRecord from '../components/healthrecord';
 
 
 const Header = ({user_address}) =>  {
-
     const truncatedAddress = `${user_address.slice(0, 7)}...${user_address.slice(-5)}`;
     return (
         <div className="header space">

@@ -6,7 +6,6 @@ import { MetaMaskSDK } from '@metamask/sdk';
 import { Link } from 'react-router-dom';
 import "../styles/header.css"
 
-
 const ConnectWalletButton = ({ connect_wallet }) => {
     const buttonStyle = {
         display: 'flex',
