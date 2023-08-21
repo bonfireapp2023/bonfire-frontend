@@ -39,7 +39,7 @@ const rows = [
     },
     {
       key: "status",
-      label: "STATUS",
+      label: "FOMRAT",
     },
   ];
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/fonts.css';
 import metamask_fox from '../images/MetaMask_Fox.png';
-import background_picture from '../images/heartfire.jpg';
+import background_picture from '../images/sky.jpg';
 import { MetaMaskSDK } from '@metamask/sdk';
 import { Link } from 'react-router-dom';
 import "../styles/header.css"
@@ -21,7 +21,6 @@ const ConnectWalletButton = ({ connect_wallet }) => {
         color: 'black', // force color here since background changes
         marginTop: 15,
         paddingRight: 5,
-        
         cursor: 'pointer',
     };
 
@@ -69,7 +68,6 @@ const connect_wallet = async () => {
     else{
         window.location = '/home';
     }
-
 };
 
   

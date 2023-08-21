@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState }from "react";
 import {
   Table,
   TableHeader,
@@ -23,29 +23,40 @@ import {SearchIcon} from "../Icons/SearchIcon";
 import {ChevronDownIcon} from "../Icons/ChevronDownIcon";
 import {EditIcon} from "../Icons/EditIcon";
 import {DeleteIcon} from "../Icons/DeleteIcon";
+import {ShareIcon} from "../Icons/ShareIcon";
 import {EyeIcon} from "../Icons/EyeIcon";
-import {columns, users, statusOptions} from "./data";
+import {columns, users, formatOptions} from "./data";
 import {capitalize} from "./utils";
+import {Popover, PopoverTrigger, PopoverContent, Spacer} from "@nextui-org/react";
+import FileInput from "./FileInput";
 
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
+const formatColorMap = {
+  image: "success",
+  text: "default",
+  health_record: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "format", "actions", "share"];
 
 const All = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
-  const [statusFilter, setStatusFilter] = React.useState("all");
+  const [formatFilter, setformatFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "age",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
+  const [files, setFiles] = useState("");
+
+  const [selectedFormatKeys, setSelectedFormatKeys] = React.useState(new Set(["health"]));
+
+  const selectedFormatValue = React.useMemo(
+    () => Array.from(selectedFormatKeys).join(", ").replaceAll("_", " "),
+    [selectedFormatKeys]
+  );
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -63,14 +74,14 @@ const All = () => {
         user.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+    if (formatFilter !== "all" && Array.from(formatFilter).length !== formatOptions.length) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+        Array.from(formatFilter).includes(user.format),
       );
     }
 
     return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+  }, [users, filterValue, formatFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -97,13 +108,16 @@ const All = () => {
     switch (columnKey) {
       case "name":
         return (
-          <User
-            avatarProps={{radius: "lg", src: user.avatar}}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
+        //   <User
+        //     avatarProps={{radius: "lg", src: user.avatar}}
+        //     description={user.email}
+        //     name={cellValue}
+        //   >
+        //     {user.email}
+        //   </User>
+          <div className="flex flex-col">
+          <p className="text-bold text-small capitalize">{cellValue}</p>
+        </div>
         );
       case "role":
         return (
@@ -112,45 +126,60 @@ const All = () => {
             <p className="text-bold text-tiny capitalize text-default-400">{user.team}</p>
           </div>
         );
-      case "status":
+      case "format":
         return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
-            {cellValue}
+          <Chip className="capitalize" color={formatColorMap[user.format]} size="sm" variant="flat">
+            {cellValue === "health_record" ? "health record" : cellValue}
           </Chip>
         );
       case "actions":
         return (
-        //   <div className="relative flex justify-end items-center gap-2">
-        //     <Dropdown>
-        //       <DropdownTrigger>
-        //         <Button isIconOnly size="sm" variant="light">
-        //           <VerticalDotsIcon className="text-default-300" />
-        //         </Button>
-        //       </DropdownTrigger>
-        //       <DropdownMenu>
-        //         <DropdownItem>View</DropdownItem>
-        //         <DropdownItem>Edit</DropdownItem>
-        //         <DropdownItem>Delete</DropdownItem>
-        //       </DropdownMenu>
-        //     </Dropdown>
-        //   </div>
         <div className="relative flex items-center gap-2">
             <Tooltip content="Details">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EyeIcon />
               </span>
             </Tooltip>
-            <Tooltip content="Edit user">
+            <Tooltip content="Edit">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EditIcon />
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
+            <Tooltip color="danger" content="Delete">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <DeleteIcon />
               </span>
             </Tooltip>
+            
           </div>
+        );
+      case "share":
+        return(
+            <Tooltip content="Share">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <Popover placement="bottom" showArrow offset={10}>
+                <PopoverTrigger>
+                    <Button color="default">Share</Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[240px]">
+                    {(titleProps) => (
+                    <div className="px-1 py-2 w-full">
+                        <p className="text-small font-bold text-foreground" {...titleProps}>
+                        Share to
+                        </p>
+                        <div className="mt-2 flex flex-col gap-2 w-full">
+                        <Input defaultValue="" label="User Address" size="sm" variant="bordered" />
+                        </div>
+                        <Spacer y={2}/>
+                        <div className="flex justify-end">
+                            <Button color="default">done</Button>
+                        </div>
+                    </div>
+                    )}
+                </PopoverContent>
+                </Popover>
+              </span>
+            </Tooltip>
         );
       default:
         return cellValue;
@@ -188,7 +217,25 @@ const All = () => {
     setPage(1)
   },[])
 
-  const topContent = React.useMemo(() => {
+  const handleUpload = e => {
+    console.log("uploading...");
+    try{
+        if (e.target.files && e.target.files[0]) {
+            const fileReader = new FileReader();
+            fileReader.readAsText(e.target.files[0], "UTF-8");
+            fileReader.onload = e => {
+            console.log("e.target.result", e.target.result);
+            setFiles(e.target.result);
+        }
+    };
+    }catch(err){
+        console.log(err);
+    }
+};
+
+
+  const topContent = React.useMemo(() => {  
+
     return (
       <div className="flex flex-col gap-4">
         <div className="flex justify-between gap-3 items-end">
@@ -202,28 +249,28 @@ const All = () => {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Status
+                  format
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
                 disallowEmptySelection
                 aria-label="Table Columns"
                 closeOnSelect={false}
-                selectedKeys={statusFilter}
+                selectedKeys={formatFilter}
                 selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
+                onSelectionChange={setformatFilter}
               >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
+                {formatOptions.map((format) => (
+                  <DropdownItem key={format.uid} className="capitalize">
+                    {capitalize(format.name)}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
+            </Dropdown> */}
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
                   Columns
@@ -243,10 +290,32 @@ const All = () => {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
-            <Button color="primary" endContent={<PlusIcon />}>
-              Add New
-            </Button>
+            </Dropdown> */}
+            <Popover placement="bottom" showArrow offset={10}>
+                <PopoverTrigger>
+                    <Button color="primary" endContent={<ShareIcon />}>
+                        retrieve
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[240px]">
+                    {(titleProps) => (
+                    <div className="px-1 py-2 w-full">
+                        {/* <p className="text-small font-bold text-foreground" {...titleProps}>
+                        Fetch from
+                        </p> */}
+                        <div className="mt-2 flex flex-col gap-2 w-full">
+                            <Input defaultValue="" label="User Address" size="sm" variant="bordered" />
+                            <Input defaultValue="" label="CID" size="sm" variant="bordered" />
+                        </div>
+                        <Spacer y={2}/>
+                        <div className="flex justify-end">
+                        <Button color="default">fetch</Button>
+                    </div>
+                    </div>
+                    )}
+                </PopoverContent>
+            </Popover>            
+            <FileInput onChange={handleUpload}/>
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -267,7 +336,7 @@ const All = () => {
     );
   }, [
     filterValue,
-    statusFilter,
+    formatFilter,
     visibleColumns,
     onRowsPerPageChange,
     users.length,
@@ -303,6 +372,7 @@ const All = () => {
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+
 
   return (
     <Table
