@@ -5,5 +5,7 @@ import "./index.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <App />
+  <main className="light text-foreground bg-background">
+    <App />
+  </main>
 );
