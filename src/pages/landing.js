@@ -1,10 +1,11 @@
 import React from 'react';
 import '../styles/fonts.css';
 import metamask_fox from '../images/MetaMask_Fox.png';
-import background_picture from '../images/sky.jpg';
+import background_picture from '../images/heartfire.jpg';
 import { MetaMaskSDK } from '@metamask/sdk';
 import { Link } from 'react-router-dom';
 import "../styles/header.css"
+import "../styles/landing.css"
 
 
 const ConnectWalletButton = ({ connect_wallet }) => {
@@ -16,6 +17,8 @@ const ConnectWalletButton = ({ connect_wallet }) => {
         border: "2px solid white",
         color: 'black', // force color here since background changes
         marginTop: 15,
+        
+        cursor: 'pointer',
     };
 
     const imageStyle = {
@@ -26,7 +29,7 @@ const ConnectWalletButton = ({ connect_wallet }) => {
     return (
         <button style={{ ...buttonStyle }} onClick={connect_wallet}>
             <img style={imageStyle} src={metamask_fox} alt=""/>
-            Connect with MetaMask
+            Login via MetaMask  
         </button>
     );
 };
@@ -39,7 +42,7 @@ const connect_wallet = async () => {
     await ethereum
         .request({ method: 'eth_requestAccounts'})
         .then((accounts) => {
-            console.log("addrerss:", accounts[0])
+            console.log("address:", accounts[0])
         })
         .then(() => (window.location = '/home'))
         .catch((err) => console.log(err));
@@ -54,11 +57,11 @@ const Header = () =>  {
                 className="header textStyle"
                 to='/home'
             >
+                {/*<h2 className="header textStyle">bonfire 🔥🪵</h2>*/}
                 <h2 className="header textStyle">bonfire 🔥🪵</h2>
             </Link>
         </div >
     );
-
 }
 
 const Landing = () => {
@@ -85,8 +88,14 @@ const Landing = () => {
         overflow: "hidden" /* Prevent scrollbars */
     }
     const titleStyle = {
-        margin: '30px',
-        fontSize: '60px',
+        margin: '0px',
+        fontSize: '50px',
+        color: 'white',
+        textAlign: 'center',
+    }
+    const textStyle = {
+        margin: '0px',
+        fontSize: '25px',
         color: 'white',
         textAlign: 'center',
     }
@@ -95,12 +104,14 @@ const Landing = () => {
            <div style={backgroundStyle}>
             <Header />
             <div style={space_horizontal}>
-                <div style={space_vertical}>
-                    <h1 style={titleStyle}>
-                        welcome to bonfire, <br />
-                        your cloud that belongs to you
-                    </h1>
-                    <ConnectWalletButton connect_wallet={connect_wallet} />
+                <div className="box" style={space_vertical}>
+                    <div style={titleStyle}>
+                        Welcome to Bonfire
+                    </div>
+                    <div style={textStyle}>
+                        Your cloud that belongs to you
+                    </div>
+                    <ConnectWalletButton connect_wallet={connect_wallet}/>
                 </div>
             </div>
         </div>

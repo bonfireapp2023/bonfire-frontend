@@ -7,9 +7,7 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route
-                    exact path="/" element={<Landing />}
-                />
+                <Route exact path="/" element={<Landing />} />
                 <Route exact path="/home" element={<Home />} />
                 <Route path="*" element={<Landing />} />
             </Routes>
