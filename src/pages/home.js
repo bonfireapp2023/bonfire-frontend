@@ -7,7 +7,7 @@ import All from "../components/all";
 import background_picture from '../images/heartfire.jpg';
 
 const backgroundStyle = {
-    background: 'white',
+    background: 'black',
     width: "100vw", /* 100% of the viewport width */
     height: "100vh", /* 100% of the viewport height */
     overflow: "scroll" /* Prevent scrollbars */
