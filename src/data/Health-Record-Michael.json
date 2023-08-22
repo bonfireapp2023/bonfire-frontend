@@ -1,0 +1,45 @@
+{
+  "patient": {
+    "name": "Michael Williams",
+    "birthdate": "1992-03-10",
+    "gender": "Male",
+    "contact": {
+      "email": "michael@example.com",
+      "phone": "555-987-6543",
+      "address": "789 Wellness Road, Healthville"
+    }
+  },
+  "medical_history": {
+    "blood_type": "AB-",
+    "allergies": ["Dust", "Peanuts"],
+    "conditions": ["Type 2 Diabetes", "High Cholesterol"],
+    "medications": [
+      {
+        "name": "Metformin",
+        "dosage": "1000mg",
+        "frequency": "Twice daily"
+      },
+      {
+        "name": "Atorvastatin",
+        "dosage": "20mg",
+        "frequency": "Once daily"
+      }
+    ]
+  },
+  "appointments": [
+    {
+      "date": "2023-09-15",
+      "time": "2:00 PM",
+      "doctor": "Dr. Brown",
+      "specialty": "Endocrinology",
+      "notes": "Diabetes check-up"
+    },
+    {
+      "date": "2023-10-30",
+      "time": "9:30 AM",
+      "doctor": "Dr. White",
+      "specialty": "Cardiology",
+      "notes": "Cholesterol follow-up"
+    }
+  ]
+}

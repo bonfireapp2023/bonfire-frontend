@@ -1,0 +1,45 @@
+{
+    "patient": {
+      "name": "Jane Smith",
+      "birthdate": "1990-12-03",
+      "gender": "Female",
+      "contact": {
+        "email": "jane.smith@example.com",
+        "phone": "987-654-3210",
+        "address": "456 Wellness Ave, Townsville"
+      }
+    },
+    "medical_history": {
+      "blood_type": "O-",
+      "allergies": ["Shellfish", "Sulfonamides"],
+      "conditions": ["Diabetes", "Migraines"],
+      "medications": [
+        {
+          "name": "Insulin",
+          "dosage": "20 units",
+          "frequency": "Twice daily"
+        },
+        {
+          "name": "Sumatriptan",
+          "dosage": "50mg",
+          "frequency": "As needed"
+        }
+      ]
+    },
+    "appointments": [
+      {
+        "date": "2023-09-05",
+        "time": "3:15 PM",
+        "doctor": "Dr. Rodriguez",
+        "specialty": "Endocrinology",
+        "notes": "Diabetes check-up"
+      },
+      {
+        "date": "2023-10-18",
+        "time": "11:30 AM",
+        "doctor": "Dr. Lee",
+        "specialty": "Neurology",
+        "notes": "Migraine management"
+      }
+    ]
+  }  

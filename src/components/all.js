@@ -1,4 +1,4 @@
-import React, { useRef, useState }from "react";
+import React, { useRef, useState, useEffect }from "react";
 import {
   Table,
   TableHeader,
@@ -25,10 +25,35 @@ import {EditIcon} from "../Icons/EditIcon";
 import {DeleteIcon} from "../Icons/DeleteIcon";
 import {ShareIcon} from "../Icons/ShareIcon";
 import {EyeIcon} from "../Icons/EyeIcon";
-import {columns, users, formatOptions} from "./data";
+import {columns, formatOptions} from "./data";
 import {capitalize} from "./utils";
 import {Popover, PopoverTrigger, PopoverContent, Spacer} from "@nextui-org/react";
 import FileInput from "./FileInput";
+import { ethers } from "ethers";
+import * as abi from "../ABIs/abis";
+
+import { Web3Storage } from 'web3.storage'
+import axios from "axios";
+function getAccessToken () {
+    return process.env.REACT_APP_WEB3STORAGE_TOKEN
+}
+  
+function makeStorageClient () {
+    return new Web3Storage({ token: getAccessToken() })
+}
+
+function getFiles () {
+    const fileInput = document.querySelector('input[type="file"]')
+    return fileInput.files
+}
+
+async function storeFiles (files) {
+    console.log("storing to filecoin...");
+    const client = makeStorageClient()
+    const cid = await client.put(files)
+    console.log('stored files with cid:', cid)
+    return cid
+  }
 
 const formatColorMap = {
   image: "success",
@@ -49,7 +74,9 @@ const All = () => {
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
+  const [users, setUsers] = React.useState([]);
   const [files, setFiles] = useState("");
+  const [targetAddress, setTargetAddress] = React.useState("");
 
   const [selectedFormatKeys, setSelectedFormatKeys] = React.useState(new Set(["health"]));
 
@@ -57,6 +84,42 @@ const All = () => {
     () => Array.from(selectedFormatKeys).join(", ").replaceAll("_", " "),
     [selectedFormatKeys]
   );
+
+  const handleShare = () => {
+    console.log("target: ", targetAddress);
+  }
+
+  useEffect( () => {
+    async function fetchData() {
+        const { ethereum } = window;
+        let user_address;
+        await ethereum
+            .request({ method: 'eth_requestAccounts'})
+            .then((accounts) => {
+                //console.log("addrerss:", accounts[0])
+                user_address = accounts[0];
+            })
+            //.then(() => (window.location = '/home'))
+            .catch((err) => console.log(err));
+        // console.log(JSON.stringify(user_address));
+        // console.log(typeof(user_address));
+
+        axios.get(`http://localhost:4000/data`).then(result => {
+            //console.log(result);    
+            var list = [];
+            //console.log(result.data);
+
+            result.data.forEach((item) => {
+                // console.log(item.body);
+                // console.log(item.body["whitelist"]);
+                if(item.body["whitelist"].includes(user_address))
+                    list.push(item.body)
+            })
+            setUsers(list);
+        });
+      }
+      fetchData();
+  },[users]);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -168,11 +231,14 @@ const All = () => {
                         Share to
                         </p>
                         <div className="mt-2 flex flex-col gap-2 w-full">
-                        <Input defaultValue="" label="User Address" size="sm" variant="bordered" />
+                        <Input label="User Address" size="sm" variant="bordered" 
+                        // value={targetAddress}
+                        // onValueChange={setTargetAddress}
+                       />
                         </div>
                         <Spacer y={2}/>
                         <div className="flex justify-end">
-                            <Button color="default">done</Button>
+                            <Button color="default" onClick={handleShare}>done</Button>
                         </div>
                     </div>
                     )}
@@ -217,21 +283,85 @@ const All = () => {
     setPage(1)
   },[])
 
-  const handleUpload = e => {
+  function getExtension(filename) {
+    return filename.split('.').pop()
+  }
+
+  const handleUpload = async e => {
     console.log("uploading...");
     try{
         if (e.target.files && e.target.files[0]) {
-            const fileReader = new FileReader();
-            fileReader.readAsText(e.target.files[0], "UTF-8");
-            fileReader.onload = e => {
-            console.log("e.target.result", e.target.result);
-            setFiles(e.target.result);
-        }
+            console.log(e.target.files);
+            const extension = getExtension(e.target.files[0].name);
+            if(extension === "json"){
+                const fileReader = new FileReader();
+                fileReader.readAsText(e.target.files[0], "UTF-8");
+                fileReader.onload = (e) => {
+                    console.log("e.target.result", e.target.result);
+                }
+                setFiles(e.target.files[0]);
+
+                var cid = await storeFiles(getFiles());
+                handleAddDataToContract(cid, e.target.files[0].name);
+            }
     };
     }catch(err){
         console.log(err);
     }
 };
+
+const handleAddDataToContract = async (cid, name) => {
+    
+    const { ethereum } = window;
+    var user_address;
+    await ethereum
+        .request({ method: 'eth_requestAccounts'})
+        .then((accounts) => {
+            console.log("addrerss:", accounts[0])
+            user_address = accounts[0];
+        })
+        //.then(() => (window.location = '/home'))
+        .catch((err) => console.log(err));
+    
+    axios.post("http://localhost:4000/data", {
+        'Content-Type': 'application/json',
+        'body': {
+            "id": cid,
+            "format": "health_record",
+            "name": name,
+            "whitelist": [user_address]
+        }
+     }
+     ).then(response => {
+        console.log('Item added:', response.data);
+      })
+      .catch(error => {
+        console.error('Error adding item:', error);
+      });
+
+    // const BONFIRE_FACTORY_CONTRACT_ADDRESS = "0x96D7cCfa8cB77CD5E807d88967D31940b8258EcF";
+    // const provider = new ethers.BrowserProvider(ethereum, "any");
+    // const factoryContract = new ethers.Contract(
+    //     BONFIRE_FACTORY_CONTRACT_ADDRESS,
+    //     abi.bonfireFactoryabi.abi,
+    //     provider
+    // );
+    
+    // try{
+    //     const user_contract_address = await factoryContract.getUserContract(user_address);
+    //     console.log(user_contract_address);
+    //     const userContract = new ethers.Contract(
+    //         user_contract_address,
+    //         abi.bonfireUser.abi,
+    //         await provider.getSigner()
+    //     );
+            
+    //     await userContract.grantAccess(ComplexString(cid), userContract);
+
+    // } catch(e){
+    //     console.log(e);
+    // }
+}
 
 
   const topContent = React.useMemo(() => {  
