@@ -19,3 +19,12 @@ backend: https://github.com/bonfireapp2023/bonfire-backend
     • see our [truffle-config.js](https://github.com/bonfireapp2023/bonfire-smart-contracts/blob/main/truffle-config.js#L57C20-L57C20)  
       
 * Make a Dapp That Slaps, No Cap: see the bounties above
+
+## Architecture
+<img alt="alt_text" width="500px" src="./src/images/arc.png" />
+
+## UI
+<img alt="alt_text" width="500px" src="./src/images/1.png" />
+<img alt="alt_text" width="500px" src="./src/images/2.png" />
+<img alt="alt_text" width="500px" src="./src/images/3.png" />
+<img alt="alt_text" width="500px" src="./src/images/4.png" />

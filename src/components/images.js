@@ -8,20 +8,20 @@ const Images = () => {
   const cardData = [
     {
       title: 'Daily Mix',
-      description: '12 Tracks',
-      subtitle: 'Frontend Radio',
+      description: '8/21/2023',
+      subtitle: 'Valley Forge',
       src: picture1
     },
     {
         title: 'Daily Mix',
-        description: '12 Tracks',
-        subtitle: 'Frontend Radio',
+        description: '6/15/2023',
+        subtitle: 'Yellowstone',
         src: picture2
     },
     {
         title: 'Daily Mix',
-        description: '12 Tracks',
-        subtitle: 'Frontend Radio',
+        description: '4/21/2023',
+        subtitle: 'Wilson Farm',
         src: picture3
     },
   ];
