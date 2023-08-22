@@ -4,6 +4,14 @@ import Images from "../components/images";
 import HealthRecord from '../components/healthrecord';
 import All from "../components/all";
 
+import background_picture from '../images/heartfire.jpg';
+
+const backgroundStyle = {
+    background: 'white',
+    width: "100vw", /* 100% of the viewport width */
+    height: "100vh", /* 100% of the viewport height */
+    overflow: "scroll" /* Prevent scrollbars */
+}
 
 const Header = ({user_address}) =>  {
     const truncatedAddress = `${user_address.slice(0, 7)}...${user_address.slice(-5)}`;
@@ -70,7 +78,7 @@ const Home = () => {
     }
 
     return (
-        <div>
+        <div style={backgroundStyle}>
             <Header user_address={ethAddress}/>
             <div>
                 <div style={leftBar}>

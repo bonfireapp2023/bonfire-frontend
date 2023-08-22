@@ -5,7 +5,6 @@ import Home from './pages/home';
 import Signup from './pages/signup';
 import {NextUIProvider} from "@nextui-org/react";
 
-
 const App = () => {
     return (
         <NextUIProvider>
