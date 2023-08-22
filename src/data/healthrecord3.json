@@ -1,0 +1,46 @@
+{
+    "patient": {
+      "name": "Alice Johnson",
+      "birthdate": "1978-08-20",
+      "gender": "Female",
+      "contact": {
+        "email": "alice.johnson@example.com",
+        "phone": "555-123-4567",
+        "address": "789 Health Lane, Villagetown"
+      }
+    },
+    "medical_history": {
+      "blood_type": "B+",
+      "allergies": ["Latex", "Ibuprofen"],
+      "conditions": ["Celiac Disease", "Anemia"],
+      "medications": [
+        {
+          "name": "Ferrous Sulfate",
+          "dosage": "325mg",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Epinephrine",
+          "dosage": "0.3mg",
+          "frequency": "As needed"
+        }
+      ]
+    },
+    "appointments": [
+      {
+        "date": "2023-09-10",
+        "time": "9:45 AM",
+        "doctor": "Dr. Martinez",
+        "specialty": "Gastroenterology",
+        "notes": "Celiac check-up"
+      },
+      {
+        "date": "2023-10-25",
+        "time": "1:00 PM",
+        "doctor": "Dr. Williams",
+        "specialty": "Hematology",
+        "notes": "Anemia follow-up"
+      }
+    ]
+  }
+  

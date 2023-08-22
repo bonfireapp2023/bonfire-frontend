@@ -1,0 +1,46 @@
+{
+    "patient": {
+      "name": "John Doe",
+      "birthdate": "1985-05-15",
+      "gender": "Male",
+      "contact": {
+        "email": "john.doe@example.com",
+        "phone": "123-456-7890",
+        "address": "123 Health St, Cityville"
+      }
+    },
+    "medical_history": {
+      "blood_type": "A+",
+      "allergies": ["Pollen", "Penicillin"],
+      "conditions": ["Hypertension", "Asthma"],
+      "medications": [
+        {
+          "name": "Lisinopril",
+          "dosage": "10mg",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Albuterol",
+          "dosage": "2 puffs",
+          "frequency": "As needed"
+        }
+      ]
+    },
+    "appointments": [
+      {
+        "date": "2023-08-25",
+        "time": "10:00 AM",
+        "doctor": "Dr. Smith",
+        "specialty": "Cardiology",
+        "notes": "Follow-up on blood pressure"
+      },
+      {
+        "date": "2023-09-10",
+        "time": "2:30 PM",
+        "doctor": "Dr. Johnson",
+        "specialty": "Pulmonology",
+        "notes": "Asthma check-up"
+      }
+    ]
+  }
+  

@@ -59,14 +59,18 @@ const connect_wallet = async () => {
         abi.bonfireFactoryabi.abi,
         provider
     );
-
-    const tx = await factoryContract.getUserContract(user_address);
-    console.log(tx);
-    if(tx === "0x0000000000000000000000000000000000000000"){
-        window.location = '/signup';
-    }
-    else{
-        window.location = '/home';
+    
+    try{
+        const tx = await factoryContract.getUserContract(user_address);
+        console.log(tx);
+        if(tx === "0x0000000000000000000000000000000000000000"){
+            window.location = '/signup';
+        }
+        else{
+            window.location = '/home';
+        }
+    } catch(e){
+        console.log(e);
     }
 };
 

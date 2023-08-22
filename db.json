@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "Content-Type": "application/json",
+      "body": {
+        "id": "bafybeifhrishvetq4tidt52lxxyvzlss4czyrdgb2r65ycg2hlegfof34e",
+        "format": "health_record",
+        "name": "Health Record - John Doe",
+        "whitelist": [
+          "0xe4293b5ff8da1412df3b7d0ff04a75342c252ed2"
+        ]
+      },
+      "id": "rcVVK_1"
+    },
+    {
+      "Content-Type": "application/json",
+      "body": {
+        "id": "bafybeigimp7g46eye6v3gyljqf4eilsc54yumsuleip6gwxwpgchzji5mq",
+        "format": "health_record",
+        "name": "Health Record - Jane Smith",
+        "whitelist": [
+          "0xe4293b5ff8da1412df3b7d0ff04a75342c252ed2"
+        ]
+      },
+      "id": "rcVVK_2"
+    },
+    {
+      "Content-Type": "application/json",
+      "body": {
+        "id": "bafybeibqcth2boea5jzshptbfyqjf2aw3niggnta2h3zswec4zlo46dfj4",
+        "format": "health_record",
+        "name": "Health Record - Alice Johnson",
+        "whitelist": [
+          "0xe4293b5ff8da1412df3b7d0ff04a75342c252ed2"
+        ]
+      },
+      "id": "rcVVK_3"
+    },
+    {
+      "Content-Type": "application/json",
+      "body": {
+        "id": "bafybeibqcth2boea5jzshptbfyqjf2aw3niggnta2h3zswec4zlo46dfj4",
+        "format": "health_record",
+        "name": "healthrecord3.json",
+        "whitelist": [
+          "0xe4293b5ff8da1412df3b7d0ff04a75342c252ed2"
+        ]
+      },
+      "id": "rcVVK_w"
+    },
+    {
+      "Content-Type": "application/json",
+      "body": {
+        "id": "bafybeigimp7g46eye6v3gyljqf4eilsc54yumsuleip6gwxwpgchzji5mq",
+        "format": "health_record",
+        "name": "healthrecord2.json",
+        "whitelist": [
+          "0xe4293b5ff8da1412df3b7d0ff04a75342c252ed2"
+        ]
+      },
+      "id": "xn43tHh"
+    }
+  ]
+}
