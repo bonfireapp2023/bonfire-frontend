@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/fonts.css';
 import metamask_fox from '../images/MetaMask_Fox.png';
-import background_picture from '../images/sky.jpg';
+import background_picture from '../images/heartfire.jpg';
 import { MetaMaskSDK } from '@metamask/sdk';
 import { Link } from 'react-router-dom';
 import "../styles/header.css"
